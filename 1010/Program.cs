@@ -1,13 +1,15 @@
-﻿namespace shop2
+﻿using static proklyatye.Program;
+
+namespace proklyatye
 {
     internal class Program
     {
-        public enum roule { Админ, Кассир, Кадровик, Кладовщик, Бухгалтер }
+        public enum roule { Админ, Кассир, Менеджерперсонала, Кладовщик, Бухгалтер }
         public enum key { zerokey, UpArrow, DownArrow, LeftArrow, RightArrow, Escape, Enter, F1, F2, F10, S }
         static user curentuser;
-        static List<user> logins = new List<user>();
-        static List<people> peoplels = new List<people>();
-        static List<goods> goodsss = new List<goods>();
+        static List<user> split = new List<user>();
+        static List<people> urod = new List<people>();
+        static List<goods> chpoks = new List<goods>();
 
         public struct user
         {
@@ -48,7 +50,7 @@
             public bool stupid()
             {
                 Console.SetCursorPosition(Console.WindowLeft / 2, Console.WindowTop / 2);
-                Console.WriteLine("Вы уверены в этом y/n");
+                Console.WriteLine("Хотите ли вы сделать это? y/n");
                 ConsoleKeyInfo cki;
                 do
                 {
@@ -71,7 +73,7 @@
             public void read()
             {
                 menuadm.clearshow();
-                menuadm.usertolist(logins[menuadm.lastpos]);
+                menuadm.usertolist(split[menuadm.lastpos]);
                 menuadm.show();
 
                 
@@ -80,7 +82,7 @@
             public void update()
             {
                 menuadm.clearshow();
-                menuadm.usertolist(logins[menuadm.lastpos]);
+                menuadm.usertolist(split[menuadm.lastpos]);
                 if (menuadm.main() == 6)
                 {
                     Console.SetCursorPosition(menuadm.startcol, menuadm.startrow + menuadm.newpos);
@@ -95,7 +97,7 @@
                 if (stupid())
                 {
                     menuadm.clearshow();
-                    logins.RemoveAt(menuadm.lastpos);
+                    split.RemoveAt(menuadm.lastpos);
                     menuadm.userstolist();
                 }
 
@@ -163,7 +165,7 @@
             public bool stupid()
             {
                 Console.SetCursorPosition(Console.WindowLeft / 2, Console.WindowTop / 2);
-                Console.WriteLine("Вы уверены в этом y/n");
+                Console.WriteLine("Хотите ли вы сделать это? y/n");
                 ConsoleKeyInfo cki;
                 do
                 {
@@ -174,13 +176,13 @@
 
             public void create()
             {
-                people adr = new people();
+                people cringe = new people();
                 menuadm.clearshow();
-                Console.Write("Имя - "); adr.name = Console.ReadLine();
-                Console.Write("Фамилия - "); adr.famelename = Console.ReadLine();
-                Console.Write("Номер паспорта - "); adr.numberpassport = Console.ReadLine();
+                Console.Write("Имя - "); cringe.name = Console.ReadLine();
+                Console.Write("Фамилия - "); cringe.famelename = Console.ReadLine();
+                Console.Write("Номер паспорта - "); cringe.numberpassport = Console.ReadLine();
                 
-                Console.Write("roule (0-4) - "); ConsoleKeyInfo cki = Console.ReadKey();
+                Console.Write("roule (0-4) - "); ConsoleKeyInfo pimp = Console.ReadKey();
                 
             }
 
@@ -189,7 +191,7 @@
                 if (stupid())
                 {
                     menuadm.clearshow();
-                    peoplels.RemoveAt(menuadm.lastpos);
+                    urod.RemoveAt(menuadm.lastpos);
                     menuadm.piplstolist();
                 }
 
@@ -204,7 +206,7 @@
             public void read()
             {
                 menuadm.clearshow();
-                menuadm.usertolist(logins[menuadm.lastpos]);
+                menuadm.usertolist(split[menuadm.lastpos]);
                 menuadm.show();
 
                 
@@ -244,7 +246,7 @@
             public bool stupid()
             {
                 Console.SetCursorPosition(Console.WindowLeft / 2, Console.WindowTop / 2);
-                Console.WriteLine("Вы уверены в этом y/n");
+                Console.WriteLine("Хотитет ли вы сделать это? y/n");
                 ConsoleKeyInfo cki;
                 do
                 {
@@ -255,11 +257,11 @@
 
             public void create()
             {
-                goods adr = new goods();
+                goods swat = new goods();
                 menuadm.clearshow();
-                Console.Write("Имя - "); adr.name = Console.ReadLine();
-                Console.Write("Стоимость - "); adr.cost = 66;
-                Console.Write("Количество - "); adr.quantity = 540;
+                Console.Write("Имя - "); swat.name = Console.ReadLine();
+                Console.Write("Стоимость - "); swat.cost = 66;
+                Console.Write("Количество - "); swat.quantity = 540;
             }
 
             public void delete()
@@ -267,7 +269,7 @@
                 if (stupid())
                 {
                     menuadm.clearshow();
-                    goodsss.RemoveAt(menuadm.lastpos);
+                    chpoks.RemoveAt(menuadm.lastpos);
                     menuadm.goodsstolist();
                 }
 
@@ -282,7 +284,7 @@
             public void read()
             {
                 menuadm.clearshow();
-                menuadm.goodstolist(goodsss[menuadm.lastpos]);
+                menuadm.goodstolist(chpoks[menuadm.lastpos]);
                 menuadm.show();
 
             }
@@ -375,17 +377,17 @@
                 tempuser.password = "2";
                 do
                 {
-                    Console.WriteLine("Введите пожалуйста логин");
+                    Console.WriteLine("Введите логин для авторизации");
                     string log = Console.ReadLine();
-                    foreach (user us in logins)
+                    foreach (user us in split)
                     {
                         if (us.login == log) { tempuser = us; break; }
                     }
-                    if (tempuser.login == "") { Console.Clear(); Console.WriteLine("Неправильный логин"); }
+                    if (tempuser.login == "") { Console.Clear(); Console.WriteLine("Ошибка (неверный логин)"); }
                 } while (tempuser.login == "");
                 do
                 {
-                    Console.WriteLine("Введите пожалуйста пароль");
+                    Console.WriteLine("Введите пароь для авторизации");
                     tmp = inputpass();
                 } while (tempuser.password == tmp);
                 curentuser = tempuser;
@@ -483,47 +485,47 @@
             }
             public void userstolist()
             {
-                arrcont = logins.Count;
+                arrcont = split.Count;
                 for (int i = 0; i < arrcont; i++)
-                { coun[i] = logins[i].login; }
+                { coun[i] = split[i].login; }
             }
-            public void usertolist(user oh)
+            public void usertolist(user monk)
             {
                 arrcont = 2;
-                coun[0] = oh.id.ToString();
-                coun[1] = oh.login;
-                coun[2] = oh.password;
+                coun[0] = monk.id.ToString();
+                coun[1] = monk.login;
+                coun[2] = monk.password;
                 
             }
             public void piplstolist()
             {
-                arrcont = peoplels.Count;
+                arrcont = urod.Count;
                 for (int i = 0; i < arrcont; i++)
-                { coun[i] = peoplels[i].famelename + " " + peoplels[i].name; }
+                { coun[i] = urod[i].famelename + " " + urod[i].name; }
             }
-            public void pipltolist(people oh)
+            public void pipltolist(people monk)
             {
                 arrcont = 4;
-                coun[0] = oh.id.ToString();
-                coun[1] = oh.famelename;
-                coun[2] = oh.name;
-                coun[3] = oh.numberpassport;
-                coun[4] = oh.salary.ToString();
+                coun[0] = monk.id.ToString();
+                coun[1] = monk.famelename;
+                coun[2] = monk.name;
+                coun[3] = monk.numberpassport;
+                coun[4] = monk.salary.ToString();
                 
             }
             public void goodsstolist()
             {
-                arrcont = goodsss.Count;
+                arrcont = chpoks.Count;
                 for (int i = 0; i < arrcont; i++)
-                { coun[i] = goodsss[i].name; }
+                { coun[i] = chpoks[i].name; }
             }
-            public void goodstolist(goods oh)
+            public void goodstolist(goods monk)
             {
                 arrcont = 4;
-                coun[0] = oh.id.ToString();
-                coun[1] = oh.name;
-                coun[2] = oh.cost.ToString();
-                coun[3] = oh.quantity.ToString();
+                coun[0] = monk.id.ToString();
+                coun[1] = monk.name;
+                coun[2] = monk.cost.ToString();
+                coun[3] = monk.quantity.ToString();
             }
 
         }
@@ -531,72 +533,72 @@
 
         public static void shop()
         {
-            user piple = new user();
-            piple.id = 1;
-            piple.login = "Админ";
-            piple.password = "123";
-            piple.roule = roule.администратор;
+            user oppa = new user();
+            oppa.id = 1;
+            oppa.login = "Админ";
+            oppa.password = "123456789";
+            oppa.roule = roule.Админ;
 
-            logins.Add(piple);
+            split.Add(oppa);
 
-            piple.id = 2;
-            piple.login = "Кассир";
-            piple.password = "123";
-            piple.roule = roule.кассир;
+            oppa.id = 2;
+            oppa.login = "Кассир";
+            oppa.password = "123456789";
+            oppa.roule = roule.Кассир;
 
-            logins.Add(piple);
+            split.Add(oppa);
 
-            piple.id = 3;
-            piple.login = "Кадровик";
-            piple.password = "123";
-            piple.roule = roule.кадровик;
+            oppa.id = 3;
+            oppa.login = "Менеджерперсонала";
+            oppa.password = "123456789";
+            oppa.roule = roule.Менеджерперсонала;
 
-            logins.Add(piple);
+            split.Add(oppa);
 
-            piple.id = 4;
-            piple.login = "кладовщик";
-            piple.password = "123";
-            piple.roule = roule.кладовщик;
+            oppa.id = 4;
+            oppa.login = "Кладовщик";
+            oppa.password = "123456789";
+            oppa.roule = roule.Кладовщик;
 
-            logins.Add(piple);
+            split.Add(oppa);
 
-            piple.id = 5;
-            piple.login = "Бухгалтер";
-            piple.password = "123";
-            piple.roule = roule.бухгалтер;
+            oppa.id = 5;
+            oppa.login = "Бухгалтер";
+            oppa.password = "123456789";
+            oppa.roule = roule.Бухгалтер;
 
-            logins.Add(piple);
+            split.Add(oppa);
 
-            people men = new people();
-            men.fathername = "Кравченко";
-            men.name = "Антон";
-            men.fathername = "Андреевич";
-            men.numberpassport = "4550 67892";
-            men.salary = 45000;
-            peoplels.Add(men);
+            people gul = new people();
+            gul.fathername = "Сеченов";
+            gul.name = "Сергей";
+            gul.fathername = "Семенович";
+            gul.numberpassport = "8 910 483 50 96";
+            gul.salary = 45000;
+            urod.Add(gul);
 
-            goods god = new goods();
-            god.name = "Скутеры";
-            god.cost = 10;
-            god.quantity = 1;
-            goodsss.Add(god);
-            god.name = "Шоколадки";
-            god.cost = 699;
-            god.quantity = 1;
-            goodsss.Add(god);
-            god.name = "Уголь";
-            god.cost = 899;
-            god.quantity = 69;
-            goodsss.Add(god);
-            god.name = "Спирт";
-            god.cost = 6;
-            god.quantity = 540;
-            goodsss.Add(god);
+            goods pivo = new goods();
+            pivo.name = "Оливки";
+            pivo.cost = 10;
+            pivo.quantity = 1;
+            chpoks.Add(pivo);
+            pivo.name = "Спагетти";
+            pivo.cost = 699;
+            pivo.quantity = 1;
+            chpoks.Add(pivo);
+            pivo.name = "Чипсы";
+            pivo.cost = 899;
+            pivo.quantity = 69;
+            chpoks.Add(pivo);
+            pivo.name = "Огурцы";
+            pivo.cost = 6;
+            pivo.quantity = 540;
+            chpoks.Add(pivo);
 
-            login loginbly = new();
-            if (curentuser.roule == roule.администратор) { admin adm = new admin(); }
-            if (curentuser.roule == roule.кадровик) { personnel adm = new personnel(); }
-            if (curentuser.roule == roule.кладовщик) { storekeeper adm = new storekeeper(); }
+            login jedkei = new();
+            if (curentuser.roule == roule.Админ) { admin bib = new admin(); }
+            if (curentuser.roule == roule.Менеджерперсонала) { personnel add = new personnel(); }
+            if (curentuser.roule == roule.Кладовщик) { storekeeper greg = new storekeeper(); }
 
         }
 
